@@ -29,6 +29,7 @@ namespace SimpleMapper.QueryStrategy
 
         public string Excute() {
             StringBuilder where = new StringBuilder();
+            where.Append("where ");
             foreach (var item in conditions) {
                 where.Append(item.GetWhere(IsString(item.field)));
             }

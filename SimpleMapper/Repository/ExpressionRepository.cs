@@ -11,30 +11,40 @@ namespace SimpleMapper
 {
     public class ExpressionRepository<T> where T:new()
     {
+        private AbstractMapper<T> mapper;
+        public ExpressionRepository() {
+            mapper = new AbstractMapper<T>();
+        }
         public T Get(Expression<Func<T,bool>> exrpression) {
             string where = new QueryTranslator().TranslateWhere(exrpression);
-            return AbstractMapper<T>.Find(where);
+            return mapper.Find(where);
         }
 
         public int Update(T model, Expression<Func<T, bool>> expression)
         {
             string where = new QueryTranslator().TranslateWhere(expression);
-            return AbstractMapper<T>.Update(model, where);
+            return mapper.Update(model, where);
         }
 
         public int Insert(T model) {
-            return AbstractMapper<T>.Insert(model);
+            return mapper.Insert(model);
         }
 
         public int Detele(Expression<Func<T, bool>> expression)
         {
             string where = GetWhere(expression);
-            return AbstractMapper<T>.Delete(where);
+            return mapper.Delete(where);
         }
 
         public string GetWhere(Expression<Func<T, bool>> expression)
         {
             return new QueryTranslator().TranslateWhere(expression);
+        }
+        public void BeginTransaction() {
+            mapper.CreateTransaction();
+        }
+        public void CommitTransaction() {
+            mapper.CommitTransaction();
         }
     }
 }

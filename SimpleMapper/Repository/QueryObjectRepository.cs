@@ -10,34 +10,36 @@ namespace SimpleMapper
 {
     public class QueryObjectRepository<T> where T : new()
     {
-        private readonly IQueryStrategy strategy;
+        private AbstractMapper<T> mapper;
         public QueryObjectRepository() {
+            mapper = new AbstractMapper<T>();
             strategy = new QueryObjectStrategy(typeof(T));
         }
-        public T Equal(Condition condition)
+        private readonly IQueryStrategy strategy;
+        public T Get(Condition condition)
         {
             string where = GetWhere(condition);
-            return AbstractMapper<T>.Find(where);
+            return mapper.Find(where);
         }
-        public T Equal(List<Condition> conditions) {
+        public T Get(List<Condition> conditions) {
             string where = GetWhere(conditions);
-            return AbstractMapper<T>.Find(where);
+            return mapper.Find(where);
         }
         public int Update(T model, Condition condition)
         {
             string where = GetWhere(condition);
-            return AbstractMapper<T>.Update(model, where);
+            return mapper.Update(model, where);
         }
 
         public int Insert(T model)
         {
-            return AbstractMapper<T>.Insert(model);
+            return mapper.Insert(model);
         }
 
         public int Detele(Condition condition)
         {
             string where = GetWhere(condition);
-            return AbstractMapper<T>.Delete(where);
+            return mapper.Delete(where);
         }
 
         public string GetWhere(Condition condition)

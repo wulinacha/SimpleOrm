@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Common;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Linq.Expressions;
@@ -12,39 +13,49 @@ namespace SimpleMapper
 {
     public class AbstractMapper<T> where T : new()
     {
-        public static readonly string connstr = ConfigHelper.GetConfigurationManagerStr("SqlConnection");
-        public static DataMap map;
-
-        public static T Find(string where) 
+        #region 初始化
+        public readonly string connstr = ConfigHelper.GetConfigurationManagerStr("SqlConnection");
+        public DataMap map;
+        private SqlConnection conn;//连接对象
+        private SqlTransaction tran;//事务对象
+        #endregion
+        #region 查询方法
+        public T Find(string where) 
         {
             T model = new T();
             map=Metadata.GetDataMap(typeof(T));
             string sql=string.Format("select {0} from {1} {2}",map.GetColumnMapListStr(),map.GetTableName(),where);
             using (SqlConnection con = new SqlConnection(connstr))
             {
-                con.Open();
-                SqlDataAdapter Adapter = new SqlDataAdapter();
-                DataSet ds = new DataSet();
-                Adapter.SelectCommand = new SqlCommand(sql, con);
-                Adapter.Fill(ds);
-                if (ds.Tables[0].Rows.Count > 0)
-                 Load(model, ds.Tables[0].Rows[0]);
+                if (con.State == ConnectionState.Closed)
+                    con.Open();
+                using (SqlCommand cmd = new SqlCommand(sql, con))
+                {
+                    SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                    if (reader.HasRows)//HasRows判断reader中是否有数据
+                    {
+                        reader.Read();
+                        Load(model,reader);
+                    }
+                    reader.Close();
+                }
             }
             return model;
         }
 
-        public static void Load(T model, DataRow row)
+        public void Load(T model, SqlDataReader reader)
         {
-            Type t=typeof(T);
+            Type t = typeof(T);
             System.Reflection.PropertyInfo[] properties = t.GetProperties();
             DataMap map = new DataMap(t.Name, t.Name);
             foreach (System.Reflection.PropertyInfo info in properties)
             {
-                info.SetValue(model, row[info.Name]);
+                info.SetValue(model, reader[info.Name]);
             }
         }
-
-        public static int Update(T model,string where) 
+        #endregion
+        #region 执行方法
+        public int Update(T model,string where) 
         {
             StringBuilder sbSet = new StringBuilder();
             string tableName = "";
@@ -65,20 +76,18 @@ namespace SimpleMapper
                 }
                 string setStr = sbSet.ToString();
                 string sql = string.Format(updateSql, tableName, StringHelper.RemoveLastElment(setStr), where);
-                using (SqlConnection con = new SqlConnection(connstr))
-                {
-                    con.Open();
-                    SqlCommand command = new SqlCommand(sql, con);
-                    return command.ExecuteNonQuery();
-                }
+                CreateConnection();
+                SqlCommand command = conn.CreateCommand();
+                command.CommandText=sql;
+                if (tran != null) command.Transaction = tran;
+                return command.ExecuteNonQuery();
             }
             catch (Exception ex)
             {
                 throw;
             }
         }
-
-        public static int Insert(T model)
+        public int Insert(T model)
         {
             StringBuilder sbFields = new StringBuilder();
             StringBuilder sbValues = new StringBuilder();
@@ -102,37 +111,59 @@ namespace SimpleMapper
                 string fieldsStr = sbFields.ToString();
                 string valuesStr = sbValues.ToString();
                 string sql = string.Format(insertSql, tableName, StringHelper.RemoveLastElment(fieldsStr), StringHelper.RemoveLastElment(valuesStr));
-                using (SqlConnection con = new SqlConnection(connstr))
-                {
-                    con.Open();
-                    SqlCommand command = new SqlCommand(sql, con);
-                    return command.ExecuteNonQuery();
-                }
+                CreateConnection();
+                SqlCommand command = conn.CreateCommand();
+                command.CommandText=sql;
+                if (tran != null) command.Transaction = tran;
+                return command.ExecuteNonQuery();
             }
             catch (Exception ex)
             {
                 throw;
             }
         }
-        public static int Delete(string where) 
+        public int Delete(string where) 
         {
             map = Metadata.GetDataMap(typeof(T));
             string sql = string.Format(deleteSql,map.GetTableName(), where);
-            using (SqlConnection con = new SqlConnection(connstr))
+            CreateConnection();
+            SqlCommand command = conn.CreateCommand();
+            command.CommandText = sql;
+            if (tran != null) command.Transaction = tran;
+            return command.ExecuteNonQuery();
+        }
+        #endregion
+        #region 连接池管理
+        //创建连接
+        public void CreateConnection() {
+            if (conn == null || conn.State != ConnectionState.Open)
             {
-                con.Open();
-                SqlCommand command = new SqlCommand(sql,con);
-                return command.ExecuteNonQuery();
+                conn = new SqlConnection(connstr);
+                conn.Open();
             }
         }
+        //创建事务
+        public void CreateTransaction() {
+            CreateConnection();
+            tran = conn.BeginTransaction();
+        }
+        //提交事务
+        public void CommitTransaction() {
+            CreateConnection();
+            tran.Commit();
+        }
+        #endregion
 
-        private static string insertSql = @"INSERT INTO {0}({1}) VALUES ({2})";
-        private static string updateSql = @"UPDATE {0} SET {1} {2}";
-        private static string deleteSql = "Delete from {0} {1}";
-
-        public static string GetWhere<T>(string sql, string tableName, Expression<Func<T, bool>> exrpression)
+        #region Sql语句
+        private string insertSql = @"INSERT INTO {0}({1}) VALUES ({2})";
+        private string updateSql = @"UPDATE {0} SET {1} {2}";
+        private string deleteSql = "Delete from {0} {1}";
+        #endregion
+        #region 通用方法
+        public string GetWhere<T>(string sql, string tableName, Expression<Func<T, bool>> exrpression)
         {
             return string.Format(sql, tableName, new QueryTranslator().TranslateWhere(exrpression));
         }
+        #endregion
     }
 }

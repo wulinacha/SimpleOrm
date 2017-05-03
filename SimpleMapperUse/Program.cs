@@ -11,6 +11,7 @@ namespace SimpleMapperUse
     {
         public static void Main(string[] args)
         {
+            #region 表达式方法
             ExpressionRepository<tb_User> repository = new ExpressionRepository<tb_User>();
             //新增
             var user = new tb_User() { mobile = "15989027156", name = "bosco", password = "123456", sex = 1 };
@@ -27,6 +28,18 @@ namespace SimpleMapperUse
             repository.Detele(e => e.name == "bosco");
             user0 = repository.Get(e => e.mobile == username);
             Console.WriteLine(user0.name);
+            #endregion
+            #region 查询对象方法
+            QueryObjectRepository<tb_User> query = new QueryObjectRepository<tb_User>();
+            var userq = new tb_User() { mobile = "15989027156", name = "bosco", password = "123456", sex = 1 };
+            query.Insert(userq);
+            userq = query.Get(new Condition() { field = "mobile", operarorsign = "=", value = "15989027156" });
+            Console.WriteLine(userq.mobile);
+            List<Condition> conditions = new List<Condition>();
+            conditions.Add(new Condition() { field = "mobile", operarorsign = "=", value = "15989027156" });
+            userq = query.Get(conditions);
+            Console.WriteLine(userq.mobile);
+            #endregion
             Console.Read();
         }
     }

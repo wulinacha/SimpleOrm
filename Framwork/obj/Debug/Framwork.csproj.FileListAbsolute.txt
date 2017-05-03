@@ -37,3 +37,7 @@ D:\学习\不同方式的框架尝试\1、事务脚本+ADO.NET\SimpleMapperUse\F
 D:\学习\不同方式的框架尝试\1、事务脚本+ADO.NET\SimpleMapperUse\Framwork\bin\Debug\Framwork.pdb
 D:\学习\不同方式的框架尝试\1、事务脚本+ADO.NET\SimpleMapperUse\Framwork\obj\Debug\Framwork.dll
 D:\学习\不同方式的框架尝试\1、事务脚本+ADO.NET\SimpleMapperUse\Framwork\obj\Debug\Framwork.pdb
+D:\GIT\SimpleMapperUse_multi-database\Framwork\bin\Debug\Framwork.dll
+D:\GIT\SimpleMapperUse_multi-database\Framwork\bin\Debug\Framwork.pdb
+D:\GIT\SimpleMapperUse_multi-database\Framwork\obj\Debug\Framwork.dll
+D:\GIT\SimpleMapperUse_multi-database\Framwork\obj\Debug\Framwork.pdb

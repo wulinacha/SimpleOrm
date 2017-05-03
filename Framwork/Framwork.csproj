@@ -62,14 +62,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ExpressionTransforSql\QueryTranslator.cs" />
+    <Compile Include="Expression\QueryTranslator.cs" />
     <Compile Include="Helper\AutoMapperHelper.cs" />
     <Compile Include="Helper\ConfigHelper.cs" />
     <Compile Include="Helper\StringHelper.cs" />
     <Compile Include="IQueryObjectRepository.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="NullExtenssion.cs" />
-    <Compile Include="ExpressionTransforSql\QueryExtenssion.cs" />
+    <Compile Include="Expression\QueryExtenssion.cs" />
     <Compile Include="ServiceResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitOfWork\UnitOfWork.cs" />

@@ -1,0 +1,8 @@
+D:\学习\不同方式的框架尝试\1、事务脚本+ADO.NET\SimpleMapperUse\SimpleMapper\bin\Debug\SimpleMapper.dll
+D:\学习\不同方式的框架尝试\1、事务脚本+ADO.NET\SimpleMapperUse\SimpleMapper\bin\Debug\SimpleMapper.pdb
+D:\学习\不同方式的框架尝试\1、事务脚本+ADO.NET\SimpleMapperUse\SimpleMapper\bin\Debug\Framwork.dll
+D:\学习\不同方式的框架尝试\1、事务脚本+ADO.NET\SimpleMapperUse\SimpleMapper\bin\Debug\AutoMapper.dll
+D:\学习\不同方式的框架尝试\1、事务脚本+ADO.NET\SimpleMapperUse\SimpleMapper\bin\Debug\Framwork.pdb
+D:\学习\不同方式的框架尝试\1、事务脚本+ADO.NET\SimpleMapperUse\SimpleMapper\obj\Debug\SimpleMapper.csprojResolveAssemblyReference.cache
+D:\学习\不同方式的框架尝试\1、事务脚本+ADO.NET\SimpleMapperUse\SimpleMapper\obj\Debug\SimpleMapper.dll
+D:\学习\不同方式的框架尝试\1、事务脚本+ADO.NET\SimpleMapperUse\SimpleMapper\obj\Debug\SimpleMapper.pdb

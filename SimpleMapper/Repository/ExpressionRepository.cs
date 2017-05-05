@@ -1,7 +1,8 @@
-﻿using Framwork;
-using SimpleMapper;
+﻿using SimpleMapper;
+using SimpleMapper.TransForTool;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -12,17 +13,27 @@ namespace SimpleMapper
     public class ExpressionRepository<T> where T:new()
     {
         private AbstractMapper<T> mapper;
-        public ExpressionRepository() {
-            mapper = new AbstractMapper<T>();
+        private string connectionString;
+        private QueryTranslator translator;
+        public ExpressionRepository(string connectionString) {
+            this.connectionString = connectionString;
+            mapper = new AbstractMapper<T>(connectionString);
         }
-        public T Get(Expression<Func<T,bool>> exrpression) {
-            string where = new QueryTranslator().TranslateWhere(exrpression);
+        public T Get(Expression<Func<T, bool>> expression)
+        {
+            string where = GetWhere(expression);
             return mapper.Find(where);
+        }
+
+        public List<T> GetList(Expression<Func<T, bool>> expression)
+        {
+            string where = GetWhere(expression);
+            return mapper.FinAll(where);
         }
 
         public int Update(T model, Expression<Func<T, bool>> expression)
         {
-            string where = new QueryTranslator().TranslateWhere(expression);
+            string where = GetWhere(expression);
             return mapper.Update(model, where);
         }
 
@@ -38,13 +49,18 @@ namespace SimpleMapper
 
         public string GetWhere(Expression<Func<T, bool>> expression)
         {
-            return new QueryTranslator().TranslateWhere(expression);
+            if (translator.IsNullOrSpace())
+                translator = new QueryTranslator();
+            return translator.TranslateWhere(expression);
         }
-        public void BeginTransaction() {
-            mapper.CreateTransaction();
+        public void BeginTransaction(IsolationLevel level = IsolationLevel.Unspecified)
+        {
+            DbContext context = new DbContext(this.connectionString);
+            mapper.RegisterDbContext(context);
+            mapper.context.CreateTransaction(level);
         }
         public void CommitTransaction() {
-            mapper.CommitTransaction();
+            mapper.context.CommitTransaction();
         }
     }
 }

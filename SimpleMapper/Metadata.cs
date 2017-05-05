@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Collections;
-using Framwork;
+using SimpleMapper.infrastructure;
 
 namespace SimpleMapper
 {

@@ -1,5 +1,4 @@
-﻿using Framwork;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
@@ -8,51 +7,89 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using SimpleMapper.infrastructure;
+using SimpleMapper.TransForTool;
+using SimpleMapper.Providers;
 
 namespace SimpleMapper
 {
     public class AbstractMapper<T> where T : new()
     {
         #region 初始化
-        public readonly string connstr = ConfigHelper.GetConfigurationManagerStr("SqlConnection");
         public DataMap map;
-        private SqlConnection conn;//连接对象
-        private SqlTransaction tran;//事务对象
+        private BaseProvider dbprovider;//数据提供者
+        public DbContext context;//连接、事务上下文
+        private string connectionString;
+        public void RegisterDbContext(DbContext context) {
+            this.context = context;
+        }
+        public AbstractMapper(string connectionString)
+        {
+            this.connectionString = connectionString;
+            this.dbprovider = ProviderFactory.GetProviderFatory(connectionString);
+        }
         #endregion
         #region 查询方法
-        public T Find(string where) 
+        public T Find(string where)
         {
             T model = new T();
-            map=Metadata.GetDataMap(typeof(T));
-            string sql=string.Format("select {0} from {1} {2}",map.GetColumnMapListStr(),map.GetTableName(),where);
-            using (SqlConnection con = new SqlConnection(connstr))
+            map = Metadata.GetDataMap(typeof(T));
+            string sql = string.Format("select {0} from {1} {2}", map.GetColumnMapListStr(), map.GetTableName(), where);
+            var conn = CreateNativeContection();
+            using (DbCommand cmd = this.dbprovider.CreateDbCommand())
             {
-                if (con.State == ConnectionState.Closed)
-                    con.Open();
-                using (SqlCommand cmd = new SqlCommand(sql, con))
+                cmd.Connection = conn;
+                cmd.CommandText = sql;
+                DbDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                if (reader.HasRows)
                 {
-                    SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
-                    if (reader.HasRows)//HasRows判断reader中是否有数据
-                    {
-                        reader.Read();
-                        Load(model,reader);
-                    }
-                    reader.Close();
+                    reader.Read();
+                    Load(model, reader);
                 }
+                reader.Close();
             }
             return model;
         }
 
-        public void Load(T model, SqlDataReader reader)
+        public T Load(T model, DbDataReader reader)
         {
             Type t = typeof(T);
             System.Reflection.PropertyInfo[] properties = t.GetProperties();
             DataMap map = new DataMap(t.Name, t.Name);
             foreach (System.Reflection.PropertyInfo info in properties)
             {
+                if (reader[info.Name].GetType() == typeof(Int64))
+                {
+                    info.SetValue(model, Convert.ToInt32(reader[info.Name]));
+                    continue;
+                }
                 info.SetValue(model, reader[info.Name]);
             }
+            return model;
         }
+        public List<T> FinAll(string where) {
+            List<T> list = new List<T>();
+            map = Metadata.GetDataMap(typeof(T));
+            string sql = string.Format("select {0} from {1} {2}", map.GetColumnMapListStr(), map.GetTableName(), where);
+            var conn = CreateNativeContection();
+            using (DbCommand cmd = this.dbprovider.CreateDbCommand())
+            {
+                cmd.Connection = conn;
+                cmd.CommandText = sql;
+                DbDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        list.Add(Load(new T(), reader));
+                    }
+                }
+                reader.Close();
+                
+            }
+            return list;
+        }
+        
         #endregion
         #region 执行方法
         public int Update(T model,string where) 
@@ -76,11 +113,13 @@ namespace SimpleMapper
                 }
                 string setStr = sbSet.ToString();
                 string sql = string.Format(updateSql, tableName, StringHelper.RemoveLastElment(setStr), where);
-                CreateConnection();
-                SqlCommand command = conn.CreateCommand();
-                command.CommandText=sql;
-                if (tran != null) command.Transaction = tran;
-                return command.ExecuteNonQuery();
+                var conn=CreateConnection();
+                DbCommand command = conn.CreateCommand();
+                command.CommandText = sql;
+                if (!IsNullContextAndTran()) command.Transaction = context.tran;
+                var result= command.ExecuteNonQuery();
+                this.Close(conn);
+                return result;
             }
             catch (Exception ex)
             {
@@ -111,11 +150,15 @@ namespace SimpleMapper
                 string fieldsStr = sbFields.ToString();
                 string valuesStr = sbValues.ToString();
                 string sql = string.Format(insertSql, tableName, StringHelper.RemoveLastElment(fieldsStr), StringHelper.RemoveLastElment(valuesStr));
-                CreateConnection();
-                SqlCommand command = conn.CreateCommand();
-                command.CommandText=sql;
-                if (tran != null) command.Transaction = tran;
-                return command.ExecuteNonQuery();
+                var conn = CreateConnection();
+                
+                DbCommand command = conn.CreateCommand();
+                command.CommandText = sql;
+                if (!IsNullContextAndTran()) command.Transaction = context.tran;
+                var result= command.ExecuteNonQuery();
+                command.Dispose();
+                this.Close(conn);
+                return result;
             }
             catch (Exception ex)
             {
@@ -124,36 +167,48 @@ namespace SimpleMapper
         }
         public int Delete(string where) 
         {
-            map = Metadata.GetDataMap(typeof(T));
-            string sql = string.Format(deleteSql,map.GetTableName(), where);
-            CreateConnection();
-            SqlCommand command = conn.CreateCommand();
-            command.CommandText = sql;
-            if (tran != null) command.Transaction = tran;
-            return command.ExecuteNonQuery();
-        }
-        #endregion
-        #region 连接池管理
-        //创建连接
-        public void CreateConnection() {
-            if (conn == null || conn.State != ConnectionState.Open)
+            try
             {
-                conn = new SqlConnection(connstr);
-                conn.Open();
+                map = Metadata.GetDataMap(typeof(T));
+                string sql = string.Format(deleteSql, map.GetTableName(), where);
+                var conn = CreateConnection();
+                DbCommand command = conn.CreateCommand();
+                command.CommandText = sql;
+                if (!IsNullContextAndTran()) command.Transaction = context.tran;
+                var result= command.ExecuteNonQuery();
+                this.Close(conn);
+                command.Dispose();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw;
             }
         }
-        //创建事务
-        public void CreateTransaction() {
-            CreateConnection();
-            tran = conn.BeginTransaction();
+        #endregion
+        #region 连接管理
+        public void Close(DbConnection conn) {
+            if (IsNullContextAndTran())
+                conn.Close();
         }
-        //提交事务
-        public void CommitTransaction() {
-            CreateConnection();
-            tran.Commit();
+        public DbConnection CreateConnection() {
+
+            if (IsNullContextAndTran())
+                return CreateNativeContection();
+
+            return context.conn;  
+        }
+        public DbConnection CreateNativeContection()
+        {
+            DbConnection conn = dbprovider.CreateDbConnection();
+            conn.ConnectionString = this.connectionString;
+            conn.Open();
+            return conn;
+        }
+        public bool IsNullContextAndTran() {
+            return context.IsNullOrSpace() || context.tran.IsNullOrSpace();
         }
         #endregion
-
         #region Sql语句
         private string insertSql = @"INSERT INTO {0}({1}) VALUES ({2})";
         private string updateSql = @"UPDATE {0} SET {1} {2}";

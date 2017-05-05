@@ -30,9 +30,19 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MySql.Data">
+      <HintPath>Lib\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Oracle.ManagedDataAccess">
+      <HintPath>Lib\Oracle.ManagedDataAccess.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.SQLite">
+      <HintPath>Lib\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -43,10 +53,22 @@
     <Compile Include="AbstractMapper.cs" />
     <Compile Include="ColumnMap.cs" />
     <Compile Include="DataMap.cs" />
+    <Compile Include="DbContext.cs" />
+    <Compile Include="Providers\BaseProvider.cs" />
+    <Compile Include="Providers\MysqlProvider.cs" />
+    <Compile Include="Providers\OracleProvider.cs" />
+    <Compile Include="Providers\SqlerverProvider.cs" />
+    <Compile Include="Providers\SqliteProvider.cs" />
+    <Compile Include="TransForTool\QueryExtenssion.cs" />
+    <Compile Include="TransForTool\QueryTranslator.cs" />
+    <Compile Include="infrastructure\ConfigHelper.cs" />
+    <Compile Include="infrastructure\NullExtenssion.cs" />
+    <Compile Include="infrastructure\StringHelper.cs" />
+    <Compile Include="infrastructure\UnitOfWork.cs" />
     <Compile Include="Metadata.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\OrmDBProviderFactory.cs" />
-    <Compile Include="Providers\SimpleOrmProviderFactory.cs" />
+    <Compile Include="ProviderFactory.cs" />
     <Compile Include="Repository\ExpressionRepository.cs" />
     <Compile Include="Repository\QueryObjectRepository.cs" />
     <Compile Include="Repository\QueryStrategy\Condition.cs" />
@@ -54,12 +76,8 @@
     <Compile Include="Repository\QueryStrategy\QueryObjectStrategy.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Framwork\Framwork.csproj">
-      <Project>{e0436b24-0b6e-42cd-bc5d-9e5c8cf2a65f}</Project>
-      <Name>Framwork</Name>
-    </ProjectReference>
+    <Folder Include="DataSource\" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

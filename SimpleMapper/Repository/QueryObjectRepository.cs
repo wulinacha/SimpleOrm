@@ -11,8 +11,9 @@ namespace SimpleMapper
     public class QueryObjectRepository<T> where T : new()
     {
         private AbstractMapper<T> mapper;
-        public QueryObjectRepository() {
-            mapper = new AbstractMapper<T>();
+        public QueryObjectRepository(string connectionString)
+        {
+            mapper = new AbstractMapper<T>(connectionString);
             strategy = new QueryObjectStrategy(typeof(T));
         }
         private readonly IQueryStrategy strategy;

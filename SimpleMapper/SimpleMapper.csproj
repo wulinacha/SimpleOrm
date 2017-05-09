@@ -59,6 +59,8 @@
     <Compile Include="Providers\OracleProvider.cs" />
     <Compile Include="Providers\SqlerverProvider.cs" />
     <Compile Include="Providers\SqliteProvider.cs" />
+    <Compile Include="Providers\Sqlserver2000Provider.cs" />
+    <Compile Include="Repository\QueryResult\PageList.cs" />
     <Compile Include="TransForTool\QueryExtenssion.cs" />
     <Compile Include="TransForTool\QueryTranslator.cs" />
     <Compile Include="infrastructure\ConfigHelper.cs" />
@@ -67,7 +69,7 @@
     <Compile Include="infrastructure\UnitOfWork.cs" />
     <Compile Include="Metadata.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Providers\OrmDBProviderFactory.cs" />
+    <Compile Include="Providers\DBProviderHelper.cs" />
     <Compile Include="ProviderFactory.cs" />
     <Compile Include="Repository\ExpressionRepository.cs" />
     <Compile Include="Repository\QueryObjectRepository.cs" />

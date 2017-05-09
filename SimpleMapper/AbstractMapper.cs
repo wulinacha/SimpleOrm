@@ -89,7 +89,63 @@ namespace SimpleMapper
             }
             return list;
         }
-        
+        //分页select * from (select ROW_NUMBER() over(order by id asc) as 'rowNumber', * from tb_User) as temp where rowNumber between (((@pageindex-1)*@pagesize)+1) and (@pageindex*@pagesize)
+        public List<T> FindPageList(string where, int pageIndex, int pageSize, out int total,string sort="")
+        {
+            List<T> list = new List<T>();
+            map = Metadata.GetDataMap(typeof(T));
+            DBProviderHelper db=new DBProviderHelper();
+            var jointSql = dbprovider.JointSql(map.tableName, map.GetColumnMapListStr(), where, sort);
+            var start = ((pageIndex - 1) * pageSize) + 1;
+            var end=(pageIndex * pageSize);
+            string sql = dbprovider.GetPageListSql(jointSql);
+            DbParameter[] param = dbprovider.GetParameter(start,end,pageSize);
+            var conn = CreateNativeContection();
+            using (DbCommand cmd = this.dbprovider.CreateDbCommand())
+            {
+                //先获取记录总数
+                total = GetCount(jointSql);
+                cmd.Connection = conn;
+                cmd.CommandText = sql;
+                cmd.Parameters.AddRange(param);
+                DbDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        list.Add(Load(new T(), reader));
+                    }
+                }
+                reader.Close();
+
+            }
+            return list;
+        }
+
+        public int GetCount(string sql)
+        {
+            var conn = CreateNativeContection();
+            try
+            {
+                using (DbCommand cmd = this.dbprovider.CreateDbCommand())
+                {
+                    cmd.CommandText = sql;
+                    cmd.Connection = conn;
+                    var ret = cmd.ExecuteScalar().ToString();
+                    int i;
+                    if (!int.TryParse(ret, out i))
+                    {
+                        throw new Exception("can't parse it to int,the value is " + ret);
+                    }
+                    return i;
+                }
+            }
+            catch (Exception)
+            {
+                conn.Close();
+                throw;
+            }
+        }
         #endregion
         #region 执行方法
         public int Update(T model,string where) 

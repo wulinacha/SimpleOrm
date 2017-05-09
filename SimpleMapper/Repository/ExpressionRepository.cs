@@ -24,11 +24,18 @@ namespace SimpleMapper
             string where = GetWhere(expression);
             return mapper.Find(where);
         }
-
         public List<T> GetList(Expression<Func<T, bool>> expression)
         {
             string where = GetWhere(expression);
             return mapper.FinAll(where);
+        }
+
+        public PageList<T> GetPageList(Expression<Func<T, bool>> expression, int pageIndex, int pageSize)
+        {
+            string where = GetWhere(expression);
+            int total = 0;
+            List<T> list = mapper.FindPageList(where, pageIndex, pageSize, out total);
+            return new PageList<T>() { pageIndex=pageIndex,pageSize=pageSize, rowCount = total, Items = list };
         }
 
         public int Update(T model, Expression<Func<T, bool>> expression)

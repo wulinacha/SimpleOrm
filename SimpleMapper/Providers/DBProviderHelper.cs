@@ -10,14 +10,16 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace SimpleMapper.Providers
+namespace SimpleMapper
 {
-  public partial class DbHelper
-    {
-        enum DBType
+  public class DBProviderHelper
+  {
+      #region 旧方法
+      enum DBType
         {
             SqlServer2000,
             SqlServer,
+            Mysql,
             Oracle,
             SQLite
         }
@@ -42,7 +44,7 @@ namespace SimpleMapper.Providers
         /// 读取WebConfig链接字符串
         /// </summary>
         /// <param name="connectionName">ConnectionString配置名</param>
-        public DbHelper(string connectionName = "")
+        public DBProviderHelper(string connectionName = "")
         {
             //默认使用ConnectionString第一项
             var config = string.IsNullOrEmpty(connectionName) ?
@@ -58,7 +60,7 @@ namespace SimpleMapper.Providers
         /// </summary>
         /// <param name="provider">DbProvider</param>
         /// <param name="connectionString">连接字符串</param>
-        public DbHelper(DbProviderFactory provider, string connectionString)
+        public DBProviderHelper(DbProviderFactory provider, string connectionString)
         {
             this.dbProvider = provider;
             this.connectionString = connectionString;
@@ -662,15 +664,15 @@ namespace SimpleMapper.Providers
         /// <summary>
         /// 匹配移除Select后的sql
         /// </summary>
-        private Regex rxColumns = new Regex(@"\A\s*SELECT\s+((?:\((?>\((?<depth>)|\)(?<-depth>)|.?)*(?(depth)(?!))\)|.)*?)(?<!,\s+)\bFROM\b", RegexOptions.IgnoreCase | RegexOptions.Multiline | RegexOptions.Singleline | RegexOptions.Compiled);
+        private static Regex rxColumns = new Regex(@"\A\s*SELECT\s+((?:\((?>\((?<depth>)|\)(?<-depth>)|.?)*(?(depth)(?!))\)|.)*?)(?<!,\s+)\bFROM\b", RegexOptions.IgnoreCase | RegexOptions.Multiline | RegexOptions.Singleline | RegexOptions.Compiled);
         /// <summary>
         /// 匹配SQL语句中Order By字段
         /// </summary>
-        private Regex rxOrderBy = new Regex(@"\b(?<ordersql>ORDER\s+BY\s+(?:\((?>\((?<depth>)|\)(?<-depth>)|.?)*(?(depth)(?!))\)|[\w\(\)\.])+)(?:\s+(?<order>ASC|DESC))?(?:\s*,\s*(?:\((?>\((?<depth>)|\)(?<-depth>)|.?)*(?(depth)(?!))\)|[\w\(\)\.])+(?:\s+(?:ASC|DESC))?)*", RegexOptions.IgnoreCase | RegexOptions.Multiline | RegexOptions.Singleline | RegexOptions.Compiled);
+        private static Regex rxOrderBy = new Regex(@"\b(?<ordersql>ORDER\s+BY\s+(?:\((?>\((?<depth>)|\)(?<-depth>)|.?)*(?(depth)(?!))\)|[\w\(\)\.])+)(?:\s+(?<order>ASC|DESC))?(?:\s*,\s*(?:\((?>\((?<depth>)|\)(?<-depth>)|.?)*(?(depth)(?!))\)|[\w\(\)\.])+(?:\s+(?:ASC|DESC))?)*", RegexOptions.IgnoreCase | RegexOptions.Multiline | RegexOptions.Singleline | RegexOptions.Compiled);
         /// <summary>
         /// 匹配SQL语句中Distinct
         /// </summary>
-        private Regex rxDistinct = new Regex(@"\ADISTINCT\s", RegexOptions.IgnoreCase | RegexOptions.Multiline | RegexOptions.Singleline | RegexOptions.Compiled);
+        private static Regex rxDistinct = new Regex(@"\ADISTINCT\s", RegexOptions.IgnoreCase | RegexOptions.Multiline | RegexOptions.Singleline | RegexOptions.Compiled);
         /// <summary>
         /// 分析Sql语句 输出分析数组 信息依次为:
         /// 0.countsql
@@ -682,7 +684,7 @@ namespace SimpleMapper.Providers
         /// </summary>
         /// <param name="sql"></param>
         /// <returns></returns>
-        private string[] SplitSqlForPaging(string sql)
+        private static string[] SplitSqlForPaging(string sql)
         {
             var sqlInfo = new string[6];
             // Extract the columns from "SELECT <whatever> FROM"
@@ -858,7 +860,7 @@ namespace SimpleMapper.Providers
         /// <param name="start"></param>
         /// <param name="limit"></param>
         /// <param name="createCount"></param>
-        private DbParameter[] CreatePageSql(string sql, out string[] sqls, int start, int limit, bool createCount = false)
+        public DbParameter[] CreatePageSql(string sql, out string[] sqls, int start, int limit, bool createCount = false)
         {
             //需要输出的sql数组
             sqls = null;
@@ -958,7 +960,168 @@ namespace SimpleMapper.Providers
             return paras;
         }
         #endregion
+      #endregion
 
+        #region 驱动器帮助类
+        /// <summary>
+        /// 生成常规Sql语句
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <param name="sqls"></param>
+        /// <param name="start"></param>
+        /// <param name="limit"></param>
+        /// <param name="createCount"></param>
+        public DbParameter[] PageSql(string sql, out string[] sqls, int pageIndex, int PageSize,out string createSql)
+        {
+            int start = ((pageIndex - 1) * PageSize) + 1;
+            //需要输出的sql数组
+            sqls = null;
+
+            //生成count的SQL语句 SqlServer生成分页，必须通过正则拆分
+            if (dbType == DBType.SqlServer || dbType == DBType.SqlServer2000)
+            {
+                sqls = SplitSqlForPaging(sql);
+                if (sqls == null)
+                {
+                    //无法解析的SQL语句
+                    throw new Exception("can't parse sql to pagesql ,the sql is " + sql);
+                }
+            }
+            else
+            {
+                sqls = new string[2];
+            }
+
+            //组织分页SQL语句
+            var pageSql = new StringBuilder();
+
+            //构建分页参数
+            var end = start + PageSize;
+
+            if (dbType == DBType.SqlServer2000)
+            {
+                pageSql.AppendFormat("SELECT TOP @PageEnd {0} {1}", sqls[2], sqls[3]);
+
+                if (start > 1)
+                {
+                    var orderChange = string.IsNullOrEmpty(sqls[5]) ? null :
+                        string.Compare(sqls[5], "desc", true) == 0 ?
+                        string.Format("{0} ASC ", sqls[4]) :
+                        string.Format("{0} DESC ", sqls[4]);
+                    pageSql.Insert(0, "SELECT TOP 100 PERCENT  * FROM (SELECT TOP @PageLimit * FROM ( ");
+                    pageSql.AppendFormat(" ) PageTab {0} ) PageTab2 {1}", orderChange, sqls[3]);
+                }
+            }
+            else if (dbType == DBType.SqlServer)
+            {
+                pageSql.AppendFormat(" Select top (@PageEnd) ROW_NUMBER() over ({0}) RN , {1}",
+                    string.IsNullOrEmpty(sqls[3]) ? "ORDER BY (SELECT NULL)" : sqls[3],
+                    sqls[2]);
+
+                //如果查询不是第一页，则需要判断起始行号
+                if (start > 1)
+                {
+                    pageSql.Insert(0, "Select PageTab.* from ( ");
+                    pageSql.Append(" ) PageTab Where RN >= @PageStart");
+                }
+            }
+            else if (dbType == DBType.Oracle)
+            {
+                pageSql.Append("select ROWNUM RN,  PageTab.* from ");
+                pageSql.AppendFormat(" ( {0} ) PageTab ", sql);
+                pageSql.Append(" where ROWNUM <= :PageEnd ");
+
+                //如果查询不是第一页，则需要判断起始行号
+                if (start > 1)
+                {
+                    pageSql.Insert(0, "select * from ( ");
+                    pageSql.Append(" ) Where RN>= :PageStart ");
+                }
+            }
+            else if (dbType == DBType.SQLite)
+            {
+                pageSql.AppendFormat("{0} limit @PageStart,@PageLimit", sql, start, PageSize);
+            }
+
+            //存储生成的分页SQL语句  
+            createSql = pageSql.ToString();
+
+            //临时测试
+            //sqls[1] = sqls[1].Replace("@", "").Replace(":", "").Replace("PageStart", start + "").Replace("PageEnd", end + "").Replace("PageLimit", limit + "");
+
+            //组织过程参数
+            DbParameter[] paras;
+            if (dbType == DBType.SqlServer2000 || dbType == DBType.SQLite)
+            {
+                paras = new DbParameter[2];
+                paras[0] = CreateParameter("@PageLimit", PageSize);
+                paras[1] = CreateParameter("@PageEnd", end);
+            }
+            else if (start > 1)
+            {
+                paras = new DbParameter[2];
+                paras[0] = CreateParameter("@PageStart", start);
+                paras[1] = CreateParameter("@PageEnd", end);
+            }
+            else
+            {
+                paras = new DbParameter[] { CreateParameter("@PageEnd", end) };
+            }
+
+            return paras;
+        }
+        /// <summary>
+        /// 分析Sql语句 输出分析数组 信息依次为:
+        /// 0.countsql
+        /// 1.pageSql(保留位置此处不做分析)
+        /// 2.移除了select的sql
+        /// 3.order by 字段 desc
+        /// 4.order by 字段
+        /// 5.desc
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <returns></returns>
+        public static string[] SplitSql(string sql)
+        {
+            var sqlInfo = new string[6];
+            // Extract the columns from "SELECT <whatever> FROM"
+            var m = rxColumns.Match(sql);
+            if (!m.Success)
+                return null;
+
+            // Save column list and replace with COUNT(*)
+            Group g = m.Groups[1];
+            sqlInfo[2] = sql.Substring(g.Index);
+
+            if (rxDistinct.IsMatch(sqlInfo[2]))
+                sqlInfo[0] = sql.Substring(0, g.Index) + "COUNT(" + m.Groups[1].ToString().Trim() + ") " + sql.Substring(g.Index + g.Length);
+            else
+                sqlInfo[0] = sql.Substring(0, g.Index) + "COUNT(*) " + sql.Substring(g.Index + g.Length);
+
+
+            // Look for an "ORDER BY <whatever>" clause
+            m = rxOrderBy.Match(sqlInfo[0]);
+            if (!m.Success)
+            {
+                sqlInfo[3] = null;
+            }
+            else
+            {
+                g = m.Groups[0];
+                sqlInfo[3] = g.ToString();
+                //统计的SQL 移除order
+                sqlInfo[0] = sqlInfo[0].Substring(0, g.Index) + sqlInfo[0].Substring(g.Index + g.Length);
+                //存储排序信息
+                sqlInfo[4] = m.Groups["ordersql"].Value;//order by xxx
+                sqlInfo[5] = m.Groups["order"].Value;//desc 
+
+                //select部分 移除order
+                sqlInfo[2] = sqlInfo[2].Replace(sqlInfo[3], string.Empty);
+            }
+
+            return sqlInfo;
+        }
+        #endregion
     }
 
 }

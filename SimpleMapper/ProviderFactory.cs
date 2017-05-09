@@ -68,7 +68,8 @@ namespace SimpleMapper
         SqlServer,
         Oracle,
         MySql,
-        Sqlite
+        Sqlite,
+        SqlSserver2000
     }
     #endregion
 }

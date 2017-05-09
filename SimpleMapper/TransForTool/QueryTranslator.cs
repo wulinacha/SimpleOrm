@@ -122,7 +122,7 @@ namespace SimpleMapper.TransForTool
                 switch (Type.GetTypeCode(c.Value.GetType()))
                 {
                     case TypeCode.Boolean:
-                        sb.Append(((bool)c.Value) ? 1 : 0);
+                        sb.Append(((bool)c.Value) ? " 1=1" : " 1=0");
                         break;
                     case TypeCode.String:
                         sb.Append("'");

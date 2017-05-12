@@ -54,6 +54,11 @@ namespace SimpleMapper
             return mapper.Delete(where);
         }
 
+        public List<TResult> Query<TResult>(string sql, object paramters)where TResult:new()
+        {
+            return mapper.Query<TResult>(sql, paramters);
+        }
+
         public string GetWhere(Expression<Func<T, bool>> expression)
         {
             if (translator.IsNullOrSpace())

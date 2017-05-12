@@ -13,3 +13,11 @@ D:\GIT\SimpleMapperUse_multi-database\SimpleMapper\bin\Debug\Oracle.ManagedDataA
 D:\GIT\SimpleMapperUse_multi-database\SimpleMapper\bin\Debug\System.Data.SQLite.dll
 D:\GIT\SimpleMapperUse_multi-database\SimpleMapper\obj\Debug\SimpleMapper.dll
 D:\GIT\SimpleMapperUse_multi-database\SimpleMapper\obj\Debug\SimpleMapper.pdb
+D:\GIT\SimpleMapperUse\SimpleMapper\bin\Debug\SimpleMapper.dll
+D:\GIT\SimpleMapperUse\SimpleMapper\bin\Debug\SimpleMapper.pdb
+D:\GIT\SimpleMapperUse\SimpleMapper\bin\Debug\MySql.Data.dll
+D:\GIT\SimpleMapperUse\SimpleMapper\bin\Debug\Oracle.ManagedDataAccess.dll
+D:\GIT\SimpleMapperUse\SimpleMapper\bin\Debug\System.Data.SQLite.dll
+D:\GIT\SimpleMapperUse\SimpleMapper\obj\Debug\SimpleMapper.csprojResolveAssemblyReference.cache
+D:\GIT\SimpleMapperUse\SimpleMapper\obj\Debug\SimpleMapper.dll
+D:\GIT\SimpleMapperUse\SimpleMapper\obj\Debug\SimpleMapper.pdb

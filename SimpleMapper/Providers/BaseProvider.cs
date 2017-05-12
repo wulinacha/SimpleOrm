@@ -33,7 +33,7 @@ namespace SimpleMapper.Providers
         public abstract DbParameter[] GetParameter(int start, int end, int PageSize);
 
 
-        protected DbParameter CreateParameter(string name, object value, DbType t = DbType.Object, ParameterDirection pDirection = ParameterDirection.Input)
+        public DbParameter CreateParameter(string name, object value, DbType t = DbType.Object, ParameterDirection pDirection = ParameterDirection.Input)
         {
             var para = CeateDbParameter();
             if (t != DbType.Object) para.DbType = t;

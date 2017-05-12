@@ -18,3 +18,12 @@ D:\GIT\SimpleMapperUse_multi-database\SimpleMapperUse\bin\Debug\SimpleMapper.pdb
 D:\GIT\SimpleMapperUse_multi-database\SimpleMapperUse\obj\Debug\SimpleMapperUse.csprojResolveAssemblyReference.cache
 D:\GIT\SimpleMapperUse_multi-database\SimpleMapperUse\obj\Debug\SimpleMapperUse.exe
 D:\GIT\SimpleMapperUse_multi-database\SimpleMapperUse\obj\Debug\SimpleMapperUse.pdb
+D:\GIT\SimpleMapperUse\SimpleMapperUse\bin\Debug\SimpleMapperUse.exe.config
+D:\GIT\SimpleMapperUse\SimpleMapperUse\obj\Debug\SimpleMapperUse.exe
+D:\GIT\SimpleMapperUse\SimpleMapperUse\obj\Debug\SimpleMapperUse.pdb
+D:\GIT\SimpleMapperUse\SimpleMapperUse\bin\Debug\SimpleMapperUse.exe
+D:\GIT\SimpleMapperUse\SimpleMapperUse\bin\Debug\SimpleMapperUse.pdb
+D:\GIT\SimpleMapperUse\SimpleMapperUse\bin\Debug\SimpleMapper.dll
+D:\GIT\SimpleMapperUse\SimpleMapperUse\bin\Debug\System.Data.SQLite.dll
+D:\GIT\SimpleMapperUse\SimpleMapperUse\bin\Debug\SimpleMapper.pdb
+D:\GIT\SimpleMapperUse\SimpleMapperUse\obj\Debug\SimpleMapperUse.csprojResolveAssemblyReference.cache

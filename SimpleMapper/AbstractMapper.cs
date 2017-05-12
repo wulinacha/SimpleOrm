@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using SimpleMapper.infrastructure;
 using SimpleMapper.TransForTool;
 using SimpleMapper.Providers;
+using System.Reflection;
+using System.Reflection.Emit;
 
 namespace SimpleMapper
 {
@@ -51,22 +53,6 @@ namespace SimpleMapper
             return model;
         }
 
-        public T Load(T model, DbDataReader reader)
-        {
-            Type t = typeof(T);
-            System.Reflection.PropertyInfo[] properties = t.GetProperties();
-            DataMap map = new DataMap(t.Name, t.Name);
-            foreach (System.Reflection.PropertyInfo info in properties)
-            {
-                if (reader[info.Name].GetType() == typeof(Int64))
-                {
-                    info.SetValue(model, Convert.ToInt32(reader[info.Name]));
-                    continue;
-                }
-                info.SetValue(model, reader[info.Name]);
-            }
-            return model;
-        }
         public List<T> FinAll(string where) {
             List<T> list = new List<T>();
             map = Metadata.GetDataMap(typeof(T));
@@ -81,7 +67,7 @@ namespace SimpleMapper
                 {
                     while (reader.Read())
                     {
-                        list.Add(Load(new T(), reader));
+                        list.Add(SqlMapper.Load(new T(), reader));
                     }
                 }
                 reader.Close();
@@ -121,7 +107,6 @@ namespace SimpleMapper
             }
             return list;
         }
-
         public int GetCount(string sql)
         {
             var conn = CreateNativeContection();
@@ -139,6 +124,44 @@ namespace SimpleMapper
                     }
                     return i;
                 }
+            }
+            catch (Exception)
+            {
+                conn.Close();
+                throw;
+            }
+        }
+        public List<TResult> Query<TResult>(string sql, object paramters, params object[] customObject) where TResult:new()
+        {
+            List<TResult> list = new List<TResult>();
+            var conn = CreateNativeContection();
+            var paramter=dbprovider.CeateDbParameter();
+            //反射获取参数值
+            List<DbParameter> param = new List<DbParameter>();
+            PropertyInfo[] properties = paramters.GetType().GetProperties();
+            foreach (PropertyInfo info in properties)
+            {
+                param.Add(dbprovider.CreateParameter(info.Name, info.GetValue(paramters)));
+            }
+            
+            try
+            {
+                using (DbCommand cmd = this.dbprovider.CreateDbCommand())
+                {
+                    cmd.CommandText = sql;
+                    cmd.Connection = conn;
+                    cmd.Parameters.AddRange(param.ToArray());
+                    var reader = cmd.ExecuteReader();
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            list.Add(Load(new TResult(), reader));
+                        }
+                    }
+                    reader.Close();
+                }
+                return list;
             }
             catch (Exception)
             {
@@ -242,6 +265,7 @@ namespace SimpleMapper
             }
         }
         #endregion
+
         #region 连接管理
         public void Close(DbConnection conn) {
             if (IsNullContextAndTran())
@@ -275,6 +299,36 @@ namespace SimpleMapper
         {
             return string.Format(sql, tableName, new QueryTranslator().TranslateWhere(exrpression));
         }
+        #endregion
+    }
+
+    public class SqlMapper
+    {
+        #region 数据加载
+        public static TResult Load<TResult>(TResult model, IDataReader reader) where TResult : new()
+        {
+            Type[] parameterTypes = new Type[] { typeof(IDataReader) };
+            DynamicMethod method = new DynamicMethod(string.Format("Deserialize{0}", Guid.NewGuid()), typeof(object), parameterTypes, true);
+            ILGenerator iLGenerator = method.GetILGenerator();
+            iLGenerator.DeclareLocal(typeof(TResult));
+            iLGenerator.Emit(OpCodes.Ldc_I4_0);
+            iLGenerator.Emit(OpCodes.Stloc_0);
+            string[] names = (from i in Enumerable.Range(0,reader.FieldCount) select reader.GetName(i)).ToArray<string>();
+            Type t = typeof(TResult);
+            PropertyInfo[] properties = t.GetProperties();
+            DataMap map = new DataMap(t.Name, t.Name);
+            foreach (PropertyInfo info in properties)
+            {
+                if (reader[info.Name].GetType() == typeof(Int64))
+                {
+                    info.SetValue(model, Convert.ToInt32(reader[info.Name]));
+                    continue;
+                }
+                info.SetValue(model, reader[info.Name]);
+            }
+            return model;
+        }
+
         #endregion
     }
 }

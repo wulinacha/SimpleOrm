@@ -22,6 +22,11 @@ namespace SimpleMapper
             string where = GetWhere(condition);
             return mapper.Find(where);
         }
+        public List<T> GetList(Condition condition)
+        {
+            string where = GetWhere(condition);
+            return mapper.FinAll(where);
+        }
         public T Get(List<Condition> conditions) {
             string where = GetWhere(conditions);
             return mapper.Find(where);

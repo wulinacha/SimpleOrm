@@ -29,7 +29,7 @@ context.CommitTransaction();
  var nonPagelist = nonClient.GetPageList<UserInfo>(e =>true, pageindex, pagesize);
  var pagelist = client.GetPageList(e => true, pageindex, pagesize);
 ```
-#SimpleOrm支持动态SQL查询操作
+# SimpleOrm支持动态SQL查询操作
 支持动态SQL，支持匿名参数，返回的是List<TResult>类型，如果想返回单条数据，可以使用QueryFirst方法，将返回类型T，使用QuerySingle方法，就算结果集有多条也只返回一条。</p>
 ``` C#
 var result = client.Query<tb_User>("select * from tb_User", new { });
@@ -53,5 +53,5 @@ QueryReader reader=client.QueryMultiple("select * from tb_User;select * from tb_
 List<tb_User> ReadUserList = reader.ReadList<tb_User>().ToList();
 List<tb_Role> ReadRoleList = reader.ReadList<tb_Role>().ToList();
 ```
-# 发展方向，下一版本将支持动态类型和lingq方法扩展
+# 发展方向，下一版本将支持动态类型和lingq方法扩展、支持.net core
 

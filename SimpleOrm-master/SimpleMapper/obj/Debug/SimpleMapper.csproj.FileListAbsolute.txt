@@ -1,0 +1,71 @@
+D:\学习\不同方式的框架尝试\1、事务脚本+ADO.NET\SimpleMapperUse\SimpleMapper\bin\Debug\SimpleMapper.dll
+D:\学习\不同方式的框架尝试\1、事务脚本+ADO.NET\SimpleMapperUse\SimpleMapper\bin\Debug\SimpleMapper.pdb
+D:\学习\不同方式的框架尝试\1、事务脚本+ADO.NET\SimpleMapperUse\SimpleMapper\bin\Debug\Framwork.dll
+D:\学习\不同方式的框架尝试\1、事务脚本+ADO.NET\SimpleMapperUse\SimpleMapper\bin\Debug\AutoMapper.dll
+D:\学习\不同方式的框架尝试\1、事务脚本+ADO.NET\SimpleMapperUse\SimpleMapper\bin\Debug\Framwork.pdb
+D:\学习\不同方式的框架尝试\1、事务脚本+ADO.NET\SimpleMapperUse\SimpleMapper\obj\Debug\SimpleMapper.csprojResolveAssemblyReference.cache
+D:\学习\不同方式的框架尝试\1、事务脚本+ADO.NET\SimpleMapperUse\SimpleMapper\obj\Debug\SimpleMapper.dll
+D:\学习\不同方式的框架尝试\1、事务脚本+ADO.NET\SimpleMapperUse\SimpleMapper\obj\Debug\SimpleMapper.pdb
+D:\GIT\SimpleMapperUse_multi-database\SimpleMapper\bin\Debug\SimpleMapper.dll
+D:\GIT\SimpleMapperUse_multi-database\SimpleMapper\bin\Debug\SimpleMapper.pdb
+D:\GIT\SimpleMapperUse_multi-database\SimpleMapper\bin\Debug\MySql.Data.dll
+D:\GIT\SimpleMapperUse_multi-database\SimpleMapper\bin\Debug\Oracle.ManagedDataAccess.dll
+D:\GIT\SimpleMapperUse_multi-database\SimpleMapper\bin\Debug\System.Data.SQLite.dll
+D:\GIT\SimpleMapperUse_multi-database\SimpleMapper\obj\Debug\SimpleMapper.dll
+D:\GIT\SimpleMapperUse_multi-database\SimpleMapper\obj\Debug\SimpleMapper.pdb
+D:\GIT\SimpleMapperUse\SimpleMapper\bin\Debug\SimpleMapper.dll
+D:\GIT\SimpleMapperUse\SimpleMapper\bin\Debug\SimpleMapper.pdb
+D:\GIT\SimpleMapperUse\SimpleMapper\bin\Debug\MySql.Data.dll
+D:\GIT\SimpleMapperUse\SimpleMapper\bin\Debug\Oracle.ManagedDataAccess.dll
+D:\GIT\SimpleMapperUse\SimpleMapper\bin\Debug\System.Data.SQLite.dll
+D:\GIT\SimpleMapperUse\SimpleMapper\obj\Debug\SimpleMapper.csprojResolveAssemblyReference.cache
+D:\GIT\SimpleMapperUse\SimpleMapper\obj\Debug\SimpleMapper.dll
+D:\GIT\SimpleMapperUse\SimpleMapper\obj\Debug\SimpleMapper.pdb
+D:\GIT\SimpleMapperUse_multi-database\SimpleMapper\obj\Debug\SimpleMapper.csprojResolveAssemblyReference.cache
+D:\学习\SimpleOrm-master\SimpleOrm-master\SimpleMapper\bin\Debug\SimpleMapper.dll
+D:\学习\SimpleOrm-master\SimpleOrm-master\SimpleMapper\bin\Debug\SimpleMapper.pdb
+D:\学习\SimpleOrm-master\SimpleOrm-master\SimpleMapper\bin\Debug\MySql.Data.dll
+D:\学习\SimpleOrm-master\SimpleOrm-master\SimpleMapper\bin\Debug\Oracle.ManagedDataAccess.dll
+D:\学习\SimpleOrm-master\SimpleOrm-master\SimpleMapper\bin\Debug\System.Data.SQLite.dll
+D:\学习\SimpleOrm-master\SimpleOrm-master\SimpleMapper\obj\Debug\SimpleMapper.dll
+D:\学习\SimpleOrm-master\SimpleOrm-master\SimpleMapper\obj\Debug\SimpleMapper.pdb
+D:\学习\SimpleOrm-master\SimpleOrm-master\SimpleMapper\obj\Debug\Decl\SimpleMapper.dll
+D:\学习\SimpleOrm-master\SimpleOrm-master\SimpleMapper\obj\Debug\Decl\SimpleMapper.pdb
+D:\学习\SimpleOrm-master\SimpleOrm-master\SimpleMapper\obj\Debug\CodeContractAnalysisRun.log
+D:\学习\SimpleOrm-master\SimpleOrm-master\SimpleMapper\obj\Debug\SimpleMapper.rewritten
+D:\学习\SimpleOrm-master\SimpleOrm-master\SimpleMapper\obj\Debug\SimpleMapper.csprojResolveAssemblyReference.cache
+D:\学习\SimpleOrm-master\SimpleMapper\bin\Debug\SimpleMapper.dll
+D:\学习\SimpleOrm-master\SimpleMapper\bin\Debug\SimpleMapper.pdb
+D:\学习\SimpleOrm-master\SimpleMapper\bin\Debug\MySql.Data.dll
+D:\学习\SimpleOrm-master\SimpleMapper\bin\Debug\Oracle.ManagedDataAccess.dll
+D:\学习\SimpleOrm-master\SimpleMapper\bin\Debug\System.Data.SQLite.dll
+D:\学习\SimpleOrm-master\SimpleMapper\obj\Debug\SimpleMapper.rewritten
+D:\学习\SimpleOrm-master\SimpleMapper\obj\Debug\SimpleMapper.dll
+D:\学习\SimpleOrm-master\SimpleMapper\obj\Debug\SimpleMapper.pdb
+D:\学习\SimpleOrm-master\SimpleMapper\obj\Debug\Decl\SimpleMapper.dll
+D:\学习\SimpleOrm-master\SimpleMapper\obj\Debug\Decl\SimpleMapper.pdb
+D:\学习\SimpleOrm-master\SimpleMapper\obj\Debug\CodeContractAnalysisRun.log
+D:\学习\SimpleOrm-master - 副本\SimpleMapper\bin\Debug\SimpleMapper.dll
+D:\学习\SimpleOrm-master - 副本\SimpleMapper\bin\Debug\SimpleMapper.pdb
+D:\学习\SimpleOrm-master - 副本\SimpleMapper\bin\Debug\MySql.Data.dll
+D:\学习\SimpleOrm-master - 副本\SimpleMapper\bin\Debug\Oracle.ManagedDataAccess.dll
+D:\学习\SimpleOrm-master - 副本\SimpleMapper\bin\Debug\System.Data.SQLite.dll
+D:\学习\SimpleOrm-master - 副本\SimpleMapper\obj\Debug\SimpleMapper.rewritten
+D:\学习\SimpleOrm-master - 副本\SimpleMapper\obj\Debug\SimpleMapper.dll
+D:\学习\SimpleOrm-master - 副本\SimpleMapper\obj\Debug\SimpleMapper.pdb
+D:\学习\SimpleOrm-master - 副本\SimpleMapper\obj\Debug\Decl\SimpleMapper.dll
+D:\学习\SimpleOrm-master - 副本\SimpleMapper\obj\Debug\Decl\SimpleMapper.pdb
+D:\学习\SimpleOrm-master - 副本\SimpleMapper\obj\Debug\CodeContractAnalysisRun.log
+D:\学习\SimpleOrm-master\SimpleMapper\obj\Debug\SimpleMapper.csprojResolveAssemblyReference.cache
+D:\学习\最新SimpleOrm\SimpleOrm-master\SimpleOrm-master\SimpleMapper\obj\Debug\SimpleMapper.csprojResolveAssemblyReference.cache
+D:\学习\最新SimpleOrm\SimpleOrm-master\SimpleOrm-master\SimpleMapper\obj\Debug\SimpleMapper.dll
+D:\学习\最新SimpleOrm\SimpleOrm-master\SimpleOrm-master\SimpleMapper\obj\Debug\SimpleMapper.pdb
+D:\学习\最新SimpleOrm\SimpleOrm-master\SimpleOrm-master\SimpleMapper\bin\Debug\SimpleMapper.dll
+D:\学习\最新SimpleOrm\SimpleOrm-master\SimpleOrm-master\SimpleMapper\bin\Debug\SimpleMapper.pdb
+D:\学习\最新SimpleOrm\SimpleOrm-master\SimpleOrm-master\SimpleMapper\bin\Debug\MySql.Data.dll
+D:\学习\最新SimpleOrm\SimpleOrm-master\SimpleOrm-master\SimpleMapper\bin\Debug\Oracle.ManagedDataAccess.dll
+D:\学习\最新SimpleOrm\SimpleOrm-master\SimpleOrm-master\SimpleMapper\bin\Debug\System.Data.SQLite.dll
+D:\学习\最新SimpleOrm\SimpleOrm-master\SimpleOrm-master\SimpleMapper\obj\Debug\SimpleMapper.rewritten
+D:\学习\最新SimpleOrm\SimpleOrm-master\SimpleOrm-master\SimpleMapper\obj\Debug\Decl\SimpleMapper.dll
+D:\学习\最新SimpleOrm\SimpleOrm-master\SimpleOrm-master\SimpleMapper\obj\Debug\Decl\SimpleMapper.pdb
+D:\学习\最新SimpleOrm\SimpleOrm-master\SimpleOrm-master\SimpleMapper\obj\Debug\CodeContractAnalysisRun.log

@@ -1,0 +1,70 @@
+D:\学习\不同方式的框架尝试\1、事务脚本+ADO.NET\SimpleMapperUse\SimpleMapperUse\bin\Debug\SimpleMapperUse.exe.config
+D:\学习\不同方式的框架尝试\1、事务脚本+ADO.NET\SimpleMapperUse\SimpleMapperUse\bin\Debug\SimpleMapperUse.exe
+D:\学习\不同方式的框架尝试\1、事务脚本+ADO.NET\SimpleMapperUse\SimpleMapperUse\bin\Debug\SimpleMapperUse.pdb
+D:\学习\不同方式的框架尝试\1、事务脚本+ADO.NET\SimpleMapperUse\SimpleMapperUse\bin\Debug\SimpleMapper.dll
+D:\学习\不同方式的框架尝试\1、事务脚本+ADO.NET\SimpleMapperUse\SimpleMapperUse\bin\Debug\Framwork.dll
+D:\学习\不同方式的框架尝试\1、事务脚本+ADO.NET\SimpleMapperUse\SimpleMapperUse\bin\Debug\AutoMapper.dll
+D:\学习\不同方式的框架尝试\1、事务脚本+ADO.NET\SimpleMapperUse\SimpleMapperUse\bin\Debug\SimpleMapper.pdb
+D:\学习\不同方式的框架尝试\1、事务脚本+ADO.NET\SimpleMapperUse\SimpleMapperUse\bin\Debug\Framwork.pdb
+D:\学习\不同方式的框架尝试\1、事务脚本+ADO.NET\SimpleMapperUse\SimpleMapperUse\obj\Debug\SimpleMapperUse.csprojResolveAssemblyReference.cache
+D:\学习\不同方式的框架尝试\1、事务脚本+ADO.NET\SimpleMapperUse\SimpleMapperUse\obj\Debug\SimpleMapperUse.exe
+D:\学习\不同方式的框架尝试\1、事务脚本+ADO.NET\SimpleMapperUse\SimpleMapperUse\obj\Debug\SimpleMapperUse.pdb
+D:\GIT\SimpleMapperUse_multi-database\SimpleMapperUse\bin\Debug\SimpleMapperUse.exe.config
+D:\GIT\SimpleMapperUse_multi-database\SimpleMapperUse\bin\Debug\SimpleMapperUse.exe
+D:\GIT\SimpleMapperUse_multi-database\SimpleMapperUse\bin\Debug\SimpleMapperUse.pdb
+D:\GIT\SimpleMapperUse_multi-database\SimpleMapperUse\bin\Debug\SimpleMapper.dll
+D:\GIT\SimpleMapperUse_multi-database\SimpleMapperUse\bin\Debug\System.Data.SQLite.dll
+D:\GIT\SimpleMapperUse_multi-database\SimpleMapperUse\bin\Debug\SimpleMapper.pdb
+D:\GIT\SimpleMapperUse_multi-database\SimpleMapperUse\obj\Debug\SimpleMapperUse.csprojResolveAssemblyReference.cache
+D:\GIT\SimpleMapperUse_multi-database\SimpleMapperUse\obj\Debug\SimpleMapperUse.exe
+D:\GIT\SimpleMapperUse_multi-database\SimpleMapperUse\obj\Debug\SimpleMapperUse.pdb
+D:\GIT\SimpleMapperUse\SimpleMapperUse\bin\Debug\SimpleMapperUse.exe.config
+D:\GIT\SimpleMapperUse\SimpleMapperUse\obj\Debug\SimpleMapperUse.exe
+D:\GIT\SimpleMapperUse\SimpleMapperUse\obj\Debug\SimpleMapperUse.pdb
+D:\GIT\SimpleMapperUse\SimpleMapperUse\bin\Debug\SimpleMapperUse.exe
+D:\GIT\SimpleMapperUse\SimpleMapperUse\bin\Debug\SimpleMapperUse.pdb
+D:\GIT\SimpleMapperUse\SimpleMapperUse\bin\Debug\SimpleMapper.dll
+D:\GIT\SimpleMapperUse\SimpleMapperUse\bin\Debug\System.Data.SQLite.dll
+D:\GIT\SimpleMapperUse\SimpleMapperUse\bin\Debug\SimpleMapper.pdb
+D:\GIT\SimpleMapperUse\SimpleMapperUse\obj\Debug\SimpleMapperUse.csprojResolveAssemblyReference.cache
+D:\GIT\SimpleMapperUse_multi-database\SimpleMapperUse\bin\Debug\Dapper.dll
+D:\学习\SimpleOrm-master\SimpleOrm-master\SimpleMapperUse\obj\Debug\SimpleMapperUse.csprojResolveAssemblyReference.cache
+D:\学习\SimpleOrm-master\SimpleOrm-master\SimpleMapperUse\bin\Debug\SimpleMapperUse.exe.config
+D:\学习\SimpleOrm-master\SimpleOrm-master\SimpleMapperUse\bin\Debug\SimpleMapperUse.exe
+D:\学习\SimpleOrm-master\SimpleOrm-master\SimpleMapperUse\bin\Debug\SimpleMapperUse.pdb
+D:\学习\SimpleOrm-master\SimpleOrm-master\SimpleMapperUse\bin\Debug\Dapper.dll
+D:\学习\SimpleOrm-master\SimpleOrm-master\SimpleMapperUse\bin\Debug\SimpleMapper.dll
+D:\学习\SimpleOrm-master\SimpleOrm-master\SimpleMapperUse\bin\Debug\System.Data.SQLite.dll
+D:\学习\SimpleOrm-master\SimpleOrm-master\SimpleMapperUse\bin\Debug\SimpleMapper.pdb
+D:\学习\SimpleOrm-master\SimpleOrm-master\SimpleMapperUse\obj\Debug\SimpleMapperUse.exe
+D:\学习\SimpleOrm-master\SimpleOrm-master\SimpleMapperUse\obj\Debug\SimpleMapperUse.pdb
+D:\学习\SimpleOrm-master\SimpleMapperUse\bin\Debug\SimpleMapperUse.exe.config
+D:\学习\SimpleOrm-master\SimpleMapperUse\obj\Debug\SimpleMapperUse.exe
+D:\学习\SimpleOrm-master\SimpleMapperUse\obj\Debug\SimpleMapperUse.pdb
+D:\学习\SimpleOrm-master\SimpleMapperUse\bin\Debug\SimpleMapperUse.exe
+D:\学习\SimpleOrm-master\SimpleMapperUse\bin\Debug\SimpleMapperUse.pdb
+D:\学习\SimpleOrm-master\SimpleMapperUse\bin\Debug\Dapper.dll
+D:\学习\SimpleOrm-master\SimpleMapperUse\bin\Debug\SimpleMapper.dll
+D:\学习\SimpleOrm-master\SimpleMapperUse\bin\Debug\System.Data.SQLite.dll
+D:\学习\SimpleOrm-master\SimpleMapperUse\bin\Debug\SimpleMapper.pdb
+D:\学习\SimpleOrm-master\SimpleMapperUse\obj\Debug\SimpleMapperUse.csprojResolveAssemblyReference.cache
+D:\学习\SimpleOrm-master - 副本\SimpleMapperUse\bin\Debug\SimpleMapperUse.exe.config
+D:\学习\SimpleOrm-master - 副本\SimpleMapperUse\obj\Debug\SimpleMapperUse.exe
+D:\学习\SimpleOrm-master - 副本\SimpleMapperUse\obj\Debug\SimpleMapperUse.pdb
+D:\学习\SimpleOrm-master - 副本\SimpleMapperUse\bin\Debug\SimpleMapperUse.exe
+D:\学习\SimpleOrm-master - 副本\SimpleMapperUse\bin\Debug\SimpleMapperUse.pdb
+D:\学习\SimpleOrm-master - 副本\SimpleMapperUse\bin\Debug\Dapper.dll
+D:\学习\SimpleOrm-master - 副本\SimpleMapperUse\bin\Debug\SimpleMapper.dll
+D:\学习\SimpleOrm-master - 副本\SimpleMapperUse\bin\Debug\System.Data.SQLite.dll
+D:\学习\SimpleOrm-master - 副本\SimpleMapperUse\bin\Debug\SimpleMapper.pdb
+D:\学习\SimpleOrm-master - 副本\SimpleMapperUse\obj\Debug\SimpleMapperUse.csprojResolveAssemblyReference.cache
+D:\学习\最新SimpleOrm\SimpleOrm-master\SimpleOrm-master\SimpleMapperUse\bin\Debug\SimpleMapperUse.exe.config
+D:\学习\最新SimpleOrm\SimpleOrm-master\SimpleOrm-master\SimpleMapperUse\obj\Debug\SimpleMapperUse.exe
+D:\学习\最新SimpleOrm\SimpleOrm-master\SimpleOrm-master\SimpleMapperUse\obj\Debug\SimpleMapperUse.pdb
+D:\学习\最新SimpleOrm\SimpleOrm-master\SimpleOrm-master\SimpleMapperUse\bin\Debug\SimpleMapperUse.exe
+D:\学习\最新SimpleOrm\SimpleOrm-master\SimpleOrm-master\SimpleMapperUse\bin\Debug\SimpleMapperUse.pdb
+D:\学习\最新SimpleOrm\SimpleOrm-master\SimpleOrm-master\SimpleMapperUse\bin\Debug\Dapper.dll
+D:\学习\最新SimpleOrm\SimpleOrm-master\SimpleOrm-master\SimpleMapperUse\bin\Debug\SimpleMapper.dll
+D:\学习\最新SimpleOrm\SimpleOrm-master\SimpleOrm-master\SimpleMapperUse\bin\Debug\System.Data.SQLite.dll
+D:\学习\最新SimpleOrm\SimpleOrm-master\SimpleOrm-master\SimpleMapperUse\bin\Debug\SimpleMapper.pdb
+D:\学习\最新SimpleOrm\SimpleOrm-master\SimpleOrm-master\SimpleMapperUse\obj\Debug\SimpleMapperUse.csprojResolveAssemblyReference.cache

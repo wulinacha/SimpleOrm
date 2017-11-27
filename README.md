@@ -57,5 +57,5 @@ QueryReader reader=client.QueryMultiple("select * from tb_User;select * from tb_
 List<tb_User> ReadUserList = reader.ReadList<tb_User>().ToList();
 List<tb_Role> ReadRoleList = reader.ReadList<tb_Role>().ToList();
 ```
-# 发展方向，下一版本将支持动态类型和lingq方法扩展、支持.net core
+# 发展方向，下一版本将支持动态类型和linq方法扩展、支持.net core
 
